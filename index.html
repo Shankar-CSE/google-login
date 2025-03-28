@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with Google</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        
+        .google-btn {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .or-divider {
+            margin: 25px 0;
+            color: #777;
+            font-size: 14px;
+            position: relative;
+        }
+        
+        .or-divider::before,
+        .or-divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+            margin: auto;
+        }
+        
+        .or-divider::before {
+            margin-right: 10px;
+        }
+        
+        .or-divider::after {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Welcome Back</h1>
+        <p>Please sign in to continue</p>
+        
+        <div class="or-divider">or</div>
+        
+        <div class="google-btn">
+            <div id="g_id_onload"
+                data-client_id="1005874492159-74pbfj3qhkaf8e56oerrrp2smchbgbs9.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-callback="handleGoogleLogin"
+                data-auto_prompt="false">
+            </div>
+
+            <div class="g_id_signin"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="outline"
+                data-text="signin_with"
+                data-size="large"
+                data-logo_alignment="left">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleGoogleLogin(response) {
+            // This is where you would normally verify the credential on your server
+            console.log("Google login response:", response);
+            
+            // For demo purposes, we'll just store the basic info in localStorage
+            const user = {
+                name: response.credential.name,
+                email: response.credential.email,
+                picture: response.credential.picture
+            };
+            
+            localStorage.setItem('user', JSON.stringify(user));
+            
+            // Redirect to welcome page
+            window.location.href = 'http://127.0.0.1:8000/';
+        }
+    </script>
+</body>
+</html>
